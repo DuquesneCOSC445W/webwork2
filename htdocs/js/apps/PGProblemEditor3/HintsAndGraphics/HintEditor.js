@@ -105,8 +105,14 @@ function toggleHintEditor(objButton){
 
  */
 
+function selectRandomVal(inArray,minSlot,maxSlot) {
+    //both min and max are inclusive
+    return inArray[Math.floor((maxSlot-minSlot+1) * Math.random()+ minSlot)]; //returns a choice (sting)
+}
+
 function saveHint(){
     translateToPG(document.getElementById("hintInput").value, hintImgDataArr,
+
 
         mainImgDataArr);
 	toggleHintEditor();

@@ -75,10 +75,10 @@ function translateRand(randTagsIn)
     for (i = 0; i < maxSlot-1; i++){
         addingString1 += randTagsIn[i] + ",";    //not sure if it needs qoutes (for strings)
     }
-    addingString1 += randTagsIn[maxSlot-1] + ");";
+    addingString1 += randTagsIn[maxSlot-1] + ");";	// +randTagsIn[0]+ "" +randTagsIn[1]+
     var addingString2 = "$randNum = random("+minSlot+"," + (maxSlot -1) + ",1);";
-    var addingString3 = "$func" +randTagsIn[0]+ "" +randTagsIn[1]+ "Trig = Formula($Input1DArray[$randNum]);";
-    var addingString4 = "$func" +randTagsIn[0]+ "" +randTagsIn[1]+ "Deriv = func" +randTagsIn[0]+ "" +randTagsIn[1]+ "Trig->D();";
+    var addingString3 = "$funcTrig = Formula($Input1DArray[$randNum]);";
+    var addingString4 = "$funcDeriv = funcTrig->D();";
 
     return addingString1 +"\n" + addingString2 +"\n" + addingString3 +"\n" +addingString4; //\n should work fine
 		//returns 4 lines of PG code for creation of random then returns that

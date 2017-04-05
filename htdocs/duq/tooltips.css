@@ -21,6 +21,7 @@
 	/* Position the tooltip */
 	position: absolute;
 	z-index: 1;
+	left:105%;
 }
 .tooltip:hover .tooltiptext {
 	visibility: visible;

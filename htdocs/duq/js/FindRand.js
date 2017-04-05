@@ -34,8 +34,9 @@ function findRand(PGString)
 	 * this while loop's structure was adapted from code found on: 
 	 * http://stackoverflow.com/questions/16897772/looping-through-string-to-find-multiple-indexes
 	*/	
-	 
+	var hasTags = false;
 	while((index = PGString.indexOf("[rand]", startIndex)) > -1) {
+		hasTags = true;
 		beginString = PGString.indexOf("[rand]", startIndex) + 6;
 		endString = PGString.indexOf("[/rand]",beginString);
 		randTags.push(new Array(beginString, endString, PGString.substring(beginString, endString).split(",")));
@@ -61,8 +62,8 @@ function findRand(PGString)
 		n++;
 		startIndex = 0;
 	}
-	return PGString;
-	
+	//return PGString;
+	return hasTags;
 }
 	 //author James Murphy 	(Group C)
 function translateRand(randTagsIn)

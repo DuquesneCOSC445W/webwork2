@@ -6,6 +6,7 @@
 <script type="text/javascript" src="js/insertKnowl.js"></script>
 <script type="text/javascript" src="js/ProblemEditing.js"></script>
 <script type="text/javascript" src="js/HintEditor.js"></script>
+<script type="text/javascript" src="js/FindRand.js"></script>
 <link rel="stylesheet" type="text/css" src="tooltips.css">
 
 <title> True False </title> 
@@ -206,8 +207,10 @@ function generatePerl()
 	}
 
 	var output = document.getElementById("outputCode");
-	output.innerHTML = "All the Perl Code is : <span id='code'>"  + pgString + "</span>"; 	
-	
+	if(findRand(pgString) == false)		
+		output.innerHTML = "All the Perl Code is : <span id='code'>"  + pgString + "</span>"; 	
+	else	
+		alert("Random tags (\"[rand]...[/rand]\") detected. Problem generation halted.");
 	// Save the state and make the updates in WebWorK
 	saveState();
 }

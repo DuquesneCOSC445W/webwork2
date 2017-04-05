@@ -3,7 +3,6 @@
 .tooltip {
 	position: relative;
 	display: inline-block;
-	border-bottom: 1px dotted black;
 	transition: 0s background-color;
 }
 .tooltip .tooltiptext {
@@ -16,12 +15,12 @@
 	padding: 5px 0;
 	font-size: .75em;
 	top: 15px;
+	left: 105%;
 	transition-delay: .5s;
 	
 	/* Position the tooltip */
 	position: absolute;
 	z-index: 1;
-	left:105%;
 }
 .tooltip:hover .tooltiptext {
 	visibility: visible;

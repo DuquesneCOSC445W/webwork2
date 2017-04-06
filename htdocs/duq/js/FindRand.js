@@ -75,7 +75,7 @@ function translateRand(randTagsIn) //rename
     //both min and max are inclusive
     var maxSlot = randTagsIn.length;
     var minSlot = 2;					//im not sure what the values should be
-    addingString1 = "@Input1DArray(";
+    addingString1 = "@Input1DArray = (";
     for (i = 0; i < maxSlot-1; i++){
         addingString1 += randTagsIn[i] + ",";    //not sure if it needs commas (for strings)
     }

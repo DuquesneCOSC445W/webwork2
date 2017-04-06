@@ -59,27 +59,32 @@ function findRand(PGString)
 		
 		var newstring = splitAndInsertModified(PGString, beginString, endString, recievedArr[n]);
 		PGString = newstring;
-		n++;
-		startIndex = 0;
+		n++;@Input1DArray01(0,1,C2,C3,Choice4,Choice5,Choice6);
+        $randNum = random(2,6,1);
+        $funcTrig = Formula($Input1DArray[$randNum]);
+        $funcDeriv = funcTrig->D();
+
+        startIndex = 0;
 	}
 	//return PGString;
 	return hasTags;
 }
 	 //author James Murphy 	(Group C)
-function translateRand(randTagsIn)
+function translateRand(randTagsIn) //rename
 {
     //both min and max are inclusive
     var maxSlot = randTagsIn.length;
-    var minSlot = 2;
-    addingString1 = "@Input1DArray"+randTagsIn[0]+ "" +randTagsIn[1]+ "(";
+    var minSlot = 2;					//im not sure what the values should be
+    addingString1 = "@Input1DArray(";
     for (i = 0; i < maxSlot-1; i++){
-        addingString1 += randTagsIn[i] + ",";    //not sure if it needs qoutes (for strings)
+        addingString1 += randTagsIn[i] + ",";    //not sure if it needs commas (for strings)
     }
-    addingString1 += randTagsIn[maxSlot-1] + ");";	// +randTagsIn[0]+ "" +randTagsIn[1]+
-    var addingString2 = "$randNum = random("+minSlot+"," + (maxSlot -1) + ",1);";
-    var addingString3 = "$funcTrig = Formula($Input1DArray[$randNum]);";
-    var addingString4 = "$funcDeriv = funcTrig->D();";
+    addingString1 += randTagsIn[maxSlot-1] + ");";
+    var addingString2 = "$randNum = random("+minSlot+"," + (maxSlot -1) + ",1);"; //might need to remove -1
+    var addingString3 = "trigFunc  = Formula($Input1DArray[$randNum]);";
+    var addingString4 = "trigDeriv = trigFunc->D();";
 
-    return addingString1 +"\n" + addingString2 +"\n" + addingString3 +"\n" +addingString4; //\n should work fine
-		//returns 4 lines of PG code for creation of random then returns that
+    return "END_PGML\n" + addingString1 +"\n" + addingString2 +"\n" + addingString3 +"\n" +addingString4 + "\nBEGIN_PGML";
+    //for non PGML
+    //return addingString1 +"\n" + addingString2 +"\n" + addingString3 +"\n" +addingString4;
 }

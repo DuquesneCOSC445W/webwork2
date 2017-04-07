@@ -59,12 +59,10 @@ function findRand(PGString)
 		
 		var newstring = splitAndInsertModified(PGString, beginString, endString, recievedArr[n]);
 		PGString = newstring;
-		n++;@Input1DArray01(0,1,C2,C3,Choice4,Choice5,Choice6);
-        $randNum = random(2,6,1);
-        $funcTrig = Formula($Input1DArray[$randNum]);
-        $funcDeriv = funcTrig->D();
+		n++;
+	
 
-        startIndex = 0;
+        	startIndex = 0;
 	}
 	//return PGString;
 	return hasTags;
@@ -76,7 +74,7 @@ function translateRand(randTagsIn) //rename
     var maxSlot = randTagsIn.length;
     var minSlot = 2;					//im not sure what the values should be
     addingString1 = "@Input1DArray = (";
-    for (i = 0; i < maxSlot-1; i++){
+    for (i = 2; i < maxSlot-1; i++){
         addingString1 += randTagsIn[i] + ",";    //not sure if it needs commas (for strings)
     }
     addingString1 += randTagsIn[maxSlot-1] + ");";

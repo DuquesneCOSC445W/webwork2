@@ -8,6 +8,7 @@
 <script type="text/javascript" src="js/HintEditor.js"></script> 
 <script type="text/javascript" src="js/toleranceEditor.js"></script> 
 <script type="text/javascript" src="js/FindRand.js"></script> 
+<script type="text/javascript" src="js/InsertIntoPG.js"></script>
 <link rel="stylesheet" type="text/css" href="tooltips.css">
 
 <title>Fill in the Blanks</title> 
@@ -222,6 +223,7 @@ function generatePerl()
 
 	 */
 
+
 	if(usingPGML(pgString)){}
 
 	else{	
@@ -253,12 +255,17 @@ function generatePerl()
 			getSelectedType());
 	}
 
+	pgString = insertInits(pgString, ['a() = 1', 'b() = 2', 'c() = 3']);
+	
 	var output = document.getElementById("codeOutput"); 
 	if(findRand(pgString) == false)
 		output.innerHTML = "All the Perl code is : <span id='code'>"  + pgString + "</span>";
 	else	
 		alert("Random tags (\"[rand]...[/rand]\") detected. Problem generation halted.");
 	// Save the state and make the updates in WebWorK
+
+
+	
 	saveState();
 }
 

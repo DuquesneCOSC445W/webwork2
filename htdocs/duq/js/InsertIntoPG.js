@@ -1,4 +1,4 @@
-function insertInits(pgString, initArr){
+function insertRandInits(pgString, initArr){
 	for(var i=0; i < initArr.length; i++){
 		initArr[i] = initArr[i] + " ";
 		if(i == initArr.length-1){

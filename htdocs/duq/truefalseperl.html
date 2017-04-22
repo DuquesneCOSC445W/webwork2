@@ -143,8 +143,7 @@ function sendHint(){
 function generatePerl()
 {
 	addKnowlHelper();
-	var question = checkDollarSigns("question");
-	document.getElementById("knowlOutput").innerHTML = question;
+	var question = document.getElementById("knowlOutput").innerHTML;
 	//team B
 	//don't worry about this. knowlOutput return the same thing as question
 	//if there is not a knowl and return the string question with knowl if there is

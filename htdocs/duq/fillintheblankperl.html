@@ -170,8 +170,7 @@ function getSelectedType(){
 function generatePerl()
 {
 	addKnowlHelper();
-	var question = checkDollarSigns("question");
-	document.getElementById("knowlOutput").innerHTML = question;
+	var question = document.getElementById("knowlOutput").innerHTML;
 	var answer = document.getElementById("answer").value;
 	answer = checkDollarSigns("answer");
 	var solution = document.getElementById("solution").value;

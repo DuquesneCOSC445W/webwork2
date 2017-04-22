@@ -6,6 +6,7 @@ function addKnowlHelper() {
     var x = document.getElementById("theWord").value;
     var y = document.getElementById("theDef").value;
     var z = document.getElementById("question").value;
+	z = checkDollarSigns("question");
     addKnowl(x, y, z);
 }
 

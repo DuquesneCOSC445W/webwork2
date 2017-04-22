@@ -9,7 +9,8 @@ function addKnowlHelper() {
     addKnowl(x, y, z);
 }
 
-function addKnowl(theWord, theDef, theQue) {
+function addKnowl(theWord, theDef, theQue) 
+{
     //passed as theQue
     // getting copy of the question
     var words = theWord;

@@ -13,7 +13,14 @@ function checkDollarSigns(requestedID)
 	if(inputString.match(/\$/g))//need if to check or else it will throw null error
 	{
 		countSingle = inputString.match(/\$/g).length;
+		if(countDouble > 0)
+		{
+			countSingle -= countDouble*2;//removes the counted $$, so sub the counted $$
+		}
 	}
+	
+	console.log("Single $: " + countSingle);
+	console.log("Double $$: " + countDouble);
 	
 	if(countDouble > 0)//contains $$
 	{
@@ -31,7 +38,7 @@ function checkDollarSigns(requestedID)
 			}
 		}
 	}
-	else if(countSingle > 0)//contains $
+	if(countSingle > 0)//contains $
 	{
 		while(countSingle > 0)
 		{

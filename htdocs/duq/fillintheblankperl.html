@@ -85,7 +85,6 @@ function sendAnswer()
 		alert("Ooops! You left the answer blank. Please try again"); 
 	} 
 	
-	answer = checkDollarSigns("answer");
 	var output = document.getElementById("outputAns"); 
 	output.innerHTML = "You answered : " +answer; 
 }
@@ -93,6 +92,7 @@ function sendAnswer()
 function sendSolution() 
 {
 	var solution = document.getElementById("solution").value; 
+	solution = checkDollarSigns("solution");
 	var output = document.getElementById("outputSolution"); 
 	output.innerHTML = "Your solution is : "  +solution; 
 }
@@ -172,8 +172,8 @@ function generatePerl()
 	addKnowlHelper();
 	var question = document.getElementById("knowlOutput").innerHTML;
 	var answer = document.getElementById("answer").value;
-	answer = checkDollarSigns("answer");
 	var solution = document.getElementById("solution").value;
+	solution = checkDollarSigns("solution");
 
 	var section1 = '<br><br>DOCUMENT();\n<br>\
 	\n<br>\

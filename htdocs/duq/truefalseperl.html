@@ -102,6 +102,7 @@ function sendAns()
 function sendSolution() 
 {
 	var solution = document.getElementById("solution").value; 
+	solution = checkDollarSigns("solution");
 	var output = document.getElementById("outputSolution"); 
 	output.innerHTML = "Your solution is : "  +solution; 
 }
@@ -148,6 +149,7 @@ function generatePerl()
 	//don't worry about this. knowlOutput return the same thing as question
 	//if there is not a knowl and return the string question with knowl if there is
 	var solution = document.getElementById("solution").value; 
+	solution = checkDollarSigns("solution");
  
 	if(document.getElementById("true").checked) 
 	{

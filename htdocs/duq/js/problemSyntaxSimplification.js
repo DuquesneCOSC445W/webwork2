@@ -19,9 +19,6 @@ function checkDollarSigns(requestedID)
 		}
 	}
 	
-	console.log("Single $: " + countSingle);
-	console.log("Double $$: " + countDouble);
-	
 	if(countDouble > 0)//contains $$
 	{
 		while(countDouble > 0)

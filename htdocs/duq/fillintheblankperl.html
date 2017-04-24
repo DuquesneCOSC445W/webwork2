@@ -163,7 +163,7 @@ function getSelectedType(){
 function generatePerl()
 {
 	addKnowlHelper();
-	var question = document.getElementById("knowlOutput").innerHTML;
+	var question = document.getElementById("knowlOutput").innerHTML + document.getElementById("matrixOutput").innerHTML;
 	var answer = document.getElementById("answer").value;
 	var solution = document.getElementById("solution").value;
 	solution = checkDollarSigns("solution");
@@ -283,6 +283,7 @@ function generatePerl()
 	<legend> Please type the question below : </legend> 
 	<p> <textarea id ="question" class="DuqWorkSave" rows="5" cols="50"></textarea><br>
 	<p id="knowlOutput" class="DuqWorkSave"></p>
+    <p id="matrixOutput" class="DuqWorkSave"></p>
 	<button onclick = "sendQuestion()" >Submit <br></button> 
 	<p> Question Preview </p>
 	<div id = "outputQues"> 
@@ -407,6 +408,12 @@ function generatePerl()
         </div>
 </fieldset>
 
+<fieldset>
+<legend> Matrix Creator </legend>
+<textarea id ="theMatrix" class="DuqWorkSave" rows = "5" cols = "30"></textarea>
+<button onclick = "addMatrixHelper()">add a Matrix</button>
+</fieldset>
+
 </div>
 </body>
 
@@ -419,5 +426,5 @@ function generatePerl()
 <script type="text/javascript" src="js/toleranceEditor.js"></script>
 <script type="text/javascript" src="js/sendProblemToWebwork.js"></script>
 <script type="text/javascript" src="js/problemSyntaxSimplification.js"></script>
-
+<script type="text/javascript" src="js/insertMatrix.js"></script>
 </html>

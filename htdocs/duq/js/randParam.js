@@ -10,7 +10,7 @@
  *
  * @author Derek S. Prijatelj
  */
-function randParam(paramInfo){
+function randParam(paramInfo, PGString){
     var randInit[]; // String[] of random param intialization PGML code
     
     for (int i = 0; i < paramInfo.length; i++){
@@ -24,7 +24,7 @@ function randParam(paramInfo){
         } // otherwise ignore, incorrect type
     }
 
-    insertRand(randInit);
+    insertRandInit(PGString, randInit);
 }
 
 /*  TODO

@@ -18,9 +18,9 @@ function randParam(paramInfo, pgString){
             randInit[i] = randNum(i+1, paramInfo[i].min, paramInfo[i].max,
                 paramInfo[i].step);
         } else if (paramInfo[i].type === "trig"){
-            randInit[i] = randTrig(i+1, paramInfo[i].funcs);
+            randInit[i] = randTrig(i+1, paramInfo[i]);
         } else if (paramInfo[i].type === "reOp"){
-            randInit[i] = randReOp(i+1, paramInfo[i].reops);
+            randInit[i] = randReOp(i+1, paramInfo[i]);
         } // otherwise ignore, incorrect type
     }
     return insertRandInits(pgString, randInit);
@@ -109,7 +109,7 @@ function randReOp(paramNum, reops){
         + ", 1);\n";
 
     init += "$rand" + paramNum + " = $reops" + paramNum + "[$randGen" + paramNum
-        + "];"
+        + "];";
 
     return init;
 }
@@ -171,7 +171,7 @@ function randTrig(paramNum, trigs){
         + ", 1);\n";
 
     init += "$rand" + paramNum + " = $trigs" + paramNum + "[$randGen" + paramNum
-        + "];"
+        + "];";
 
     return init;
 }

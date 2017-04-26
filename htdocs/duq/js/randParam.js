@@ -10,13 +10,13 @@
  *
  * @author Derek S. Prijatelj
  */
-function randParam(paramInfo, PGString){
+function randParam(paramInfo, pgString){
     var randInit[]; // String[] of random param intialization PGML code
     
     for (int i = 0; i < paramInfo.length; i++){
         if (paramInfo[i].type === "num"){
             randInit[i] = randNum(i, paramInfo[i].min, paramInfo[i].max,
-                paramInfo[i].step, paramInfo[i].zero);
+                paramInfo[i].step);
         } else if (paramInfo[i].type === "trig"){
             randInit[i] = randTrig(i, paramInfo[i].funcs);
         } else if (paramInfo[i].type === "reop"){
@@ -24,17 +24,19 @@ function randParam(paramInfo, PGString){
         } // otherwise ignore, incorrect type
     }
 
-    insertRandInit(PGString, randInit);
+    return insertRandInit(pgString, randInit);
 }
 
 /*  TODO
     I do not add any 'BEGIN_PGML' or 'END_PGML' tags because that should be
     handeld by the inserter when inserting all of these initialization variables
-    all together. So all initialization code below is in perl, simple append
-    END_PGML and BEGIN_PMGL to the end of the randPGMLInit list on printout.
+    all together. So all initialization code below is in perl, simply append
+    END_PGML and BEGIN_PMGL to the end of the randPGMLInit list on printout, if
+    the init section is somehow in the middle of PGML.
 
-    We also may experience error when calling our '$rand#' variables in PGML as
-    is. Take note.
+    TODO
+    Since we intend to use PGML, we must tell the instructor to write [$rand#]
+    rather than just $rand#, becuase thats how PGML works over normal PG.
 */
 
 /**
@@ -61,8 +63,37 @@ function randNum(paramNum, min, max, step, zero = true){
  * @author Derek S. Prijatelj
  */
 function randReOp(paramNum, reops){
-    var init = "@reops" + paramNum + " = (\"";
+    var init = "@reops" + paramNum + " = (";
 
+    // Expects array[6] of booleans with labeled pointers
+    var ops;
+    if (reops.less){
+        ops.push("\"<\"");
+    }
+    if (reops.lessEqual){
+        ops.push("\"<=\"");
+    }
+    if (reops.great){
+        ops.push("\">\"");
+    }
+    if (reops.greatEqual){
+        ops.push("\">=\"");
+    }
+    if (reops.equal){
+        ops.push("\"==\"");
+    }
+    if (reops.notEqual){
+        ops.push("\"!=\"");
+    }
+
+    for(int i = 0; i < ops.length; i++){
+        init += ops[i];
+        if (i < ops.length - 1){
+            init += ", "
+        }
+    }
+    
+    /*// Expects String array
     for(int i = 0; i < reops.length; i++){
         if (reops[i]s[i] === ">" || reops[i] === "<" || reops[i] === "<="
                 || reops[i] === ">=" || reops[i] === "=" || reops[i] === "!="){
@@ -72,9 +103,10 @@ function randReOp(paramNum, reops){
             }
         }
     }
-    init += "\");\n";
+    */
+    init += ");\n";
 
-    init += "$randGen" + paramNum + " = random(0, " + (reops.length-1)
+    init += "$randGen" + paramNum + " = random(0, " + (ops.length-1)
         + ", 1);\n";
 
     init += "$rand" + paramNum + " = $reops" + paramNum + "[$randGen" + paramNum
@@ -91,8 +123,37 @@ function randReOp(paramNum, reops){
  * @author Derek S. Prijatelj
  */
 function randTrig(paramNum, trigs){
-    var init = "@trigs" + paramNum + " = (\"";
+    var init = "@trigs" + paramNum + " = (";
 
+    // Expects array[6] of booleans with labeled pointers
+    var functions;
+    if (trigs.Sin){
+        functions.push("\"sin\"");
+    }
+    if (trigs.Cos){
+        functions.push("\"cos\"");
+    }
+    if (trigs.Tan){
+        functions.push("\"tan\"");
+    }
+    if (trigs.Csc){
+        functions.push("\"csc\"");
+    }
+    if (trigs.Sec){
+        functions.push("\"sec\"");
+    }
+    if (trigs.Cot){
+        functions.push("\"cot\"");
+    }
+
+    for(int i = 0; i < functions.length; i++){
+        init += functions[i];
+        if (i < functions.length - 1){
+            init += ", "
+        }
+    }
+
+    /*// Expects String array
     for(int i = 0; i < trigs.length; i++){
         if (trigs[i]s[i] === "sin" || trigs[i] === "cos" || trigs[i] === "tan"
                 || trigs[i] === "sec" || trigs[i] === "csc"
@@ -103,9 +164,11 @@ function randTrig(paramNum, trigs){
             }
         }
     }
-    init += "\");\n";
+    */
+    
+    init += ");\n";
 
-    init += "$randGen" + paramNum + " = random(0, " + (trigs.length-1)
+    init += "$randGen" + paramNum + " = random(0, " + (functions.length-1)
         + ", 1);\n";
 
     init += "$rand" + paramNum + " = $trigs" + paramNum + "[$randGen" + paramNum

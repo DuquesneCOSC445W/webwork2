@@ -2,11 +2,6 @@
 <html> 
 <head> 
 
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script type="text/javascript" src="js/insertKnowl.js"></script>
-<script type="text/javascript" src="js/ProblemEditing.js"></script>
-<script type="text/javascript" src="js/HintEditor.js"></script>
-<script type="text/javascript" src="js/FindRand.js"></script>
 <link rel="stylesheet" type="text/css" href="tooltips.css">
 
 <title> True False </title> 
@@ -67,7 +62,7 @@ button
 
 function sendQuestion() 
 {
-	addKnowlHelper();
+	//addKnowlHelper();
 	var question = document.getElementById("question").value; 
 	if(question == "") 
 	{
@@ -76,7 +71,8 @@ function sendQuestion()
 	else
 	{
 		var output = document.getElementById("outputQues"); 
-		output.innerHTML = "You asked : " +question; 
+		question = checkDollarSigns("question");
+		output.innerHTML = "You asked : " + question; 
 	}
 }
 
@@ -102,8 +98,9 @@ function sendAns()
 function sendSolution() 
 {
 	var solution = document.getElementById("solution").value; 
+	solution = checkDollarSigns("solution");
 	var output = document.getElementById("outputSolution"); 
-	output.innerHTML = "Your solution is : "  +solution; 
+	output.innerHTML = "Your solution is : "  + solution; 
 }
 
 function sendImage(){
@@ -148,6 +145,7 @@ function generatePerl()
 	//don't worry about this. knowlOutput return the same thing as question
 	//if there is not a knowl and return the string question with knowl if there is
 	var solution = document.getElementById("solution").value; 
+	solution = checkDollarSigns("solution");
  
 	if(document.getElementById("true").checked) 
 	{
@@ -207,10 +205,8 @@ function generatePerl()
 	}
 
 	var output = document.getElementById("outputCode");
-	if(findRand(pgString) == false)		
-		output.innerHTML = "All the Perl Code is : <span id='code'>"  + pgString + "</span>"; 	
-	else	
-		alert("Random tags (\"[rand]...[/rand]\") detected. Problem generation halted.");
+	output.innerHTML = "All the Perl Code is : <span id='code'>"  + pgString + "</span>"; 	
+	
 	// Save the state and make the updates in WebWorK
 	saveState();
 }
@@ -227,14 +223,163 @@ function generatePerl()
 <div id = "codeArea">
 <fieldset>
 	<legend> Click the button to see a preview of the Perl generated for this question </legend>
-	<button onclick = "generatePerl()" >Submit <br></button>
+	<button id="submitButton" class="truefalse">Submit <br></button>
 	<br><br> 
 	<div id="outputCode">
 	</div>
 </div>
 
-
 <div id = "userInput">
+<!--Random Field-->
+<fieldset>
+        <legend> Do you want to add randomization to this problem? </legend>
+	<!-- yes/no radio buttons -->
+	<input type="radio" name="randType" value="YesRand" 
+		onclick = "showRandom()" id = "randYes">
+		<label for="randYes">Yes</label>
+	<input type="radio" name="randType" value="NoRand" checked 			onclick="hideRandom()" id = "randNo">
+		<label for="randNo">No</label><br>
+	<!-- Variable Checkboxes -->
+	<div id = "acceptRandoms" style = "display:none;">
+		<br>Check the type of randomizations you want:<br>
+		<input type="checkbox" name="randomType" id="numValue" 
+	 		value="numRand" onclick="showNumValRand()">
+			<label for="numValue">Numerical Values</label><br>
+		<input type="checkbox" name="randomType" id="trigValue" 
+			value="trigRand" onclick="showTrigRand()">
+			<label for="trigValue">Trigometric Functions</label><br>
+		<input type="checkbox" name="randomType" id="reOpValue" 
+			value="ReRand" onclick="showReOpRand()">
+			<label for ="reOpValue">Relational Operator</label><br>
+	</div>
+	<!-- Numerical Value Section -->
+	<div id = "randNumValues" style = display:none;">
+	<table id = "numTable">
+		<tr id = "numRow">
+		<td>
+		<br>Enter the range in which the random numbers should be 				pulled from.<br>
+		<div class = "tooltip">
+			<span class = "tooltiptext">Enter the lowest number in 					the range</span>
+			<textarea name = "randRangeStart" placeholder = "Start" 					rows = "1" cols = "15"></textarea>
+		</div>
+		<div class = "tooltip">
+			<span class = "tooltiptext">Enter the highest number in 				the range</span>
+			<textarea name = "randRangeEnd" placeholder = "End" rows = 					"1" cols = "15"></textarea> 
+		</div>
+		<br>
+		<div class="tooltip">
+			Enter the value you would like to increment the 					randomization by.<br>
+			<span class = "tooltiptext">For example: in a range of 					(1,5) with an increment value of 0.5, you could 				get randomized values such as 1, 1.5, 2, 2.5, 					etc. The default value is 1.</span>
+			<textarea name="randIncrement" placeholder="Increments" 				rows = "1" cols = "30">1</textarea><br>
+		</div>
+		<br>
+		<div class="tooltip">
+			<span class = "tooltiptext">Add another random 
+				numerical value.</span>
+			<button class="button" 
+				onclick="addNewRow('numTable','numRow')">
+				+</button>
+		</div>
+		<div class="tooltip">
+			<span class = "tooltiptext">Remove the most recently 					added random numerical value.</span>
+			<button class="button" 
+				onclick="deleteLastRow('numTable')">
+				-</button>
+		</div>
+		</td>
+		</tr>
+	</table>
+	</div>
+	<!-- Trigometric Section -->
+	<div id = "randTrig" style = display:none;">
+	<br>Check the trig variables you would like to have randomized.
+	<table id = "trigTable">
+		<tr id = "trigRow">
+		<td><br>
+		<input type="checkbox" name="trigType"
+			value="sin" id="sinRand" checked>
+			<label for="sinRand">Sin </label>
+		<input type="checkbox" name="trigType"
+			value="cos" id="cosRand" checked>
+			<label for="cosRand">Cos </label>
+		<input type="checkbox" name="trigType"
+			value="tan" id="tanRand" checked>
+			<label for="tanRand">Tan </label><br> 
+		<input type="checkbox" name="trigType"
+			value="csc" id="cscRand">
+			<label for="cscRand">Csc </label>
+		<input type="checkbox" name="trigType"
+			value="sec" id="secRand">
+			<label for="secRand">Sec </label>
+		<input type="checkbox" name="trigType"
+			value="cot" id="cotRand">
+			<label for="cotRand">Cot </label><br><br>
+
+		<div class="tooltip">
+			<span class = "tooltiptext">Add another random 
+				trig variable.</span>
+			<button class="button" 
+				onclick="addNewRow('trigTable','trigRow')">
+				+</button>
+		</div>
+		<div class="tooltip">
+			<span class = "tooltiptext">Remove the most recently 					added random trig variable.</span>
+			<button class="button" 
+				onclick="deleteLastRow('trigTable')">
+				-</button>
+		</div>
+		</td>
+		</tr>
+	</table>
+	</div>
+	<!-- Relational Operator Section -->
+	<div id = "randRegOp" style = display:none;">
+	<br>Choose the relational operators you would like to possibly 			have in your problem.<br>
+	<table id = "reOpTable">
+		<tr id = "reOpRow">
+		<td><br>
+		<input type="checkbox" name="roType"
+			value="<" id="lessRand">
+			<label for="lessRand">< </label>
+		<input type="checkbox" name="roType"
+			value="<=" id="lessEqRand">
+			<label for="lessRand">&#8804 </label><br>
+		<input type="checkbox" name="roType"
+			value=">" id="greatRand">
+			<label for="greatRand">> </label>
+		<input type="checkbox" name="roType"
+			value=">=" id="greatEqRand">
+			<label for="greatEqRand">&#8805 </label><br>
+		<input type="checkbox" name="roType"
+			value="=" id="equalRand">
+			<label for="EqualRand">= </label>
+		<input type="checkbox" name="roType"
+			value="!=" id="notEqualRand">
+			<label for="notEqualRand">&#8800 </label><br><br>
+		<div class="tooltip">
+			<span class = "tooltiptext">Add another random 
+				relational operator.</span>
+			<button class="button" 
+				onclick="addNewRow('reOpTable','reOpRow')">
+				+</button>
+		</div>
+		<div class="tooltip">
+			<span class = "tooltiptext">Remove the most recently 					added random relational operator.</span>
+			<button class="button" 
+				onclick="deleteLastRow('reOpTable')">
+				-</button><br>
+		</div>
+		</td>
+		</tr>
+	</table>
+	</div>
+	<div id = "finalRandField" style = "display:none;">
+		<br><button class = "button"
+			onclick = "createRandomOutput()">Finish</button>
+		<br>
+		<div id = "randomResults"></div>
+	</div>
+</fieldset>
 <fieldset> 
 	<legend> Please type the question below : </legend> 	
 	<textarea id ="question" class="DuqWorkSave" rows = "5" cols = "50"></textarea> <br> 
@@ -264,14 +409,19 @@ function generatePerl()
 </div> 
 </fieldset>
 
-<title> Knowls Creator </title>
+<title> Knowl Creator </title>
 <fieldset>
-    <legend>Knowls Creator:</legend>
-    
- Knowl keyword <br>
+    <legend>Knowl Creator/Searcher:</legend>
+		<p><small>*Use @ as separator for multiple knowl keyword, content, and search fields</small></p> 
+ Knowl creation keyword:<br>
   <textarea id="theWord" class="DuqWorkSave" rows="1" cols="20"></textarea><br>
- Knowl Content: <br>
-  <textarea id="theDef" class="DuqWorkSave" rows="4" cols="50"></textarea><br> 
+ Knowl creation content:<br>
+  <textarea id="theDef" class="DuqWorkSave" rows="4" cols="50"></textarea><br><br>
+ Knowl search keyword:<br>
+  <textarea id="theSearch" class="DuqWorkSave" rows="1" cols="20"></textarea><br><br>
+  <button onclick="addKnowlHelper()"> Add a knowl!</button><br>
+		<p><small>*Use \\(math\\) or \\[displaymath\\] for Latex Expression<br>
+		*For example: \\(sin(x)\\)</small></p>
 </fieldset>
 
 
@@ -281,13 +431,14 @@ function generatePerl()
 
 	<p>Enter text here:</p>
 	<div class="tooltip">
-		<span class="tooltiptext">This is what the student will see when they click on "Need Help".</span>
+        	<span class="tooltiptext">This is what the student will see when they click on "Need Help".</span>
 		<textarea id ="hintText" class="DuqWorkSave" rows = "5" cols = "50"></textarea>
 	</div>
 	<br>
+ 
 	<p>Enter a URL for an externally hosted image here:<br>(Default size is 500x500)</p>
 	<div class="tooltip">
-		<span class="tooltiptext">This is the image that appears when the student clicks on "Need Help". Height and width are represented in pixels.</span>
+		<span class="tooltiptext">This is the image that will appear when the student clicks on "Need Help".</span>
 		<textarea id ="imageHintText" class="DuqWorkSave" rows = "5" cols = "50"></textarea>
 		<textarea id = "imageHintWidth" class="DuqWorkSave" placeholder = "width" rows = "1" cols = "7"></textarea>
 		<textarea id = "imageHintHeight" class="DuqWorkSave" placeholder = "height" rows = "1" cols = "7"></textarea>
@@ -296,9 +447,8 @@ function generatePerl()
 	<div class="tooltip">
 		<span class="tooltiptext">This will allow you to preview the hint.</span>
 		<button class = "button" onclick = "sendHint()">Hint preview</button>
-	</div>
-	<p> Hint Preview </p>  
-	<div id = "outputHint"> 
+		<p> Hint Preview </p>  
+		<div id = "outputHint"></div>
 	</div> 
 </fieldset>
 
@@ -309,7 +459,7 @@ function generatePerl()
 		<br>(Default size is 500x500)
 	</legend> 
 	<div class="tooltip">
-		<span class="tooltiptext">This is the image that the student will see inside of the problem.</span>
+		<span class="tooltiptext">This is the image that the student will see inside of the problem. Height and width are represented in pixels.</span>
 		<textarea id ="imageText" class="DuqWorkSave" rows = "5" cols = "50"></textarea>
 		<textarea id = "imageWidth" class="DuqWorkSave" placeholder = "width" rows = "1" cols = "7"></textarea>
 		<textarea id = "imageHeight" class="DuqWorkSave" placeholder = "height" rows = "1" cols = "7"></textarea>
@@ -318,11 +468,20 @@ function generatePerl()
 	<div class="tooltip">
 		<span class="tooltiptext">This will allow you to preview the image.</span>
 		<button class = "button" onclick = "sendImage()">Image preview</button>
-	</div>
-	<p> Image Preview </p>  
-	<div id = "outputImage"> 
+		<p> Image Preview </p>  
+		<div id = "outputImage"></div>
 	</div> 
 </fieldset>
 
-</body> 
-</html> 
+</body>
+
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/vendor/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="js/insertKnowl.js"></script>
+<script type="text/javascript" src="js/HintEditor.js"></script>
+<script type="text/javascript" src="js/sendProblemToWebwork.js"></script>
+<script type="text/javascript" src="js/ProblemEditing.js"></script>
+<script type="text/javascript" src="js/problemSyntaxSimplification.js"></script>
+<script type="text/javascript" src="js/randomProblems.js"></script>
+
+</html>

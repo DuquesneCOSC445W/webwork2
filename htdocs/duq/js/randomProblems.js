@@ -113,7 +113,7 @@ function sendRandom(type,table){
 	return checked_value;
 }
 function randNumObjects(x,y,s){
-	return {type:"num", Start:x,End:y,Increment:s};
+	return {type:"num", min:x,max:y,step:s};
 }
 function randTrigObjects(i){
 	var funcs = document.getElementsByName('trigType');
@@ -153,7 +153,7 @@ function createRandomObjects(pgString){
 	 * reOp: less,lessEqual,great,greatEqual,equal,notEqual
 	 */
 
-	if(numCheck.checked){
+	if(numCheck){
 	   for(var i = 0; i < numTable.rows.length; i++){
 		min = document.getElementsByName("randRangeStart")[i].value;
 		max = document.getElementsByName("randRangeEnd")[i].value;
@@ -162,14 +162,14 @@ function createRandomObjects(pgString){
 		numArray[i]=randNumObjects(min,max,step);
 	   }
 	}
-	if(trigCheck.checked){
+	if(trigCheck){
 	   var count = 0;
 	   for(var i = 0; i < trigTable.rows.length; i++){
 		trigArray[i]=randTrigObjects(count);
 		count+=6;
 	   }	
 	}
-	if(reOpCheck.checked){
+	if(reOpCheck){
 	   var count = 0;
 	   for(var i = 0; i < reOpTable.rows.length; i++){
 		reOpArray[i]=randReOpObjects(count);
@@ -183,7 +183,6 @@ function createRandomObjects(pgString){
 	//Call Derek's function here
 	pgString = randParam(finalArray, pgString);
 	
-	alert(pgString);
 
 	return pgString;
 }
@@ -284,4 +283,17 @@ function deleteLastRow(name){
 	//Deleting the first row results in having to refresh the page in order 	to add a new one, therefore the first row can't be deleted.
 }
 //End Random Section
+
+
+//insert PG variable inits into pg problem string
+function insertRandInits(pgString, initArr){
+        for(var i=0; i < initArr.length; i++){
+                initArr[i] = initArr[i] + " ";
+                if(i == initArr.length-1){
+                        initArr[i] = initArr[i] + '<br>';
+                }
+                pgString = splitAndInsert(pgString, findIndex('TEXT(beginproblem());', pgString, 'before'), pgString.length, '<br>' + initArr[i]);
+        }
+        return pgString;
+}
 

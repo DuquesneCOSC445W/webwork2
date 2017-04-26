@@ -11,19 +11,18 @@
  * @author Derek S. Prijatelj
  */
 function randParam(paramInfo, pgString){
-    var randInit[]; // String[] of random param intialization PGML code
-    
-    for (int i = 0; i < paramInfo.length; i++){
+    var randInit = new Array(); // String[] of random param intialization PGML code
+	
+    for (var i = 0; i < paramInfo.length; i++){
         if (paramInfo[i].type === "num"){
-            randInit[i] = randNum(i, paramInfo[i].min, paramInfo[i].max,
+            randInit[i] = randNum(i+1, paramInfo[i].min, paramInfo[i].max,
                 paramInfo[i].step);
         } else if (paramInfo[i].type === "trig"){
-            randInit[i] = randTrig(i, paramInfo[i].funcs);
+            randInit[i] = randTrig(i+1, paramInfo[i].funcs);
         } else if (paramInfo[i].type === "reop"){
-            randInit[i] = randReOp(i, paramInfo[i].reops);
+            randInit[i] = randReOp(i+1, paramInfo[i].reops);
         } // otherwise ignore, incorrect type
     }
-
     return insertRandInits(pgString, randInit);
 }
 
@@ -86,7 +85,7 @@ function randReOp(paramNum, reops){
         ops.push("\"!=\"");
     }
 
-    for(int i = 0; i < ops.length; i++){
+    for(var i = 0; i < ops.length; i++){
         init += ops[i];
         if (i < ops.length - 1){
             init += ", "
@@ -146,7 +145,7 @@ function randTrig(paramNum, trigs){
         functions.push("\"cot\"");
     }
 
-    for(int i = 0; i < functions.length; i++){
+    for(var i = 0; i < functions.length; i++){
         init += functions[i];
         if (i < functions.length - 1){
             init += ", "

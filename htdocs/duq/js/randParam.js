@@ -24,7 +24,7 @@ function randParam(paramInfo, pgString){
         } // otherwise ignore, incorrect type
     }
 
-    return insertRandInit(pgString, randInit);
+    return insertRandInits(pgString, randInit);
 }
 
 /*  TODO

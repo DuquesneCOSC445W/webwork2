@@ -36,7 +36,7 @@ function addMatrix(theMatrix, theQue){
         var finalMatrixCode = m1+ m2+ matrix + m3+ m4;
         //output=output + finalMatrixCode;
         // add in the end of question with known
-        document.getElementById("matrixOutput").innerHTML = question+"<br>"+finalMatrixCode;
+        document.getElementById("matrixOutput").innerHTML = question +finalMatrixCode;
         //replace
  }
 }

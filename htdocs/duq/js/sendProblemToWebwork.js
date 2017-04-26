@@ -133,7 +133,7 @@ function generateFillInBlanks()
    	var section2 = '"=>{});\n<br>';
 	//$answer = String("';
 	var section2_String = '$answer = String("';
-	var section2_Real ='$answer = Real("';
+	var section2_Real ='$answer = Compute("';
 
 
 	var section3 ='");\n<br>\
@@ -173,14 +173,18 @@ function generateFillInBlanks()
 	if(usingPGML(pgString)){}
 
 	else{	
-		if(getSelectedType() == "none"){
+		if((getSelectedType() == "none" && !document.getElementsByName('randType')[0].checked)){
 			pgString = section1 + answer + section2 +
 				section2_String + answer + section3 +
 				question + section4 + solution + section5;
 		}	
 		else{ 
-			pgString = section1 + answer + section2 + section2_Real + answer + section3 + 					question + section4 + solution + section5;
+			pgString = section1 + answer + section2 + section2_Real + answer + section3 + question + section4 + solution + section5;
 		}
+
+		if(document.getElementById('reOpValue').checked && document.getElementsByName('randType')[0].checked){
+		}
+
 	}
 	
 	//Insert hint/image PG code, if there is a hint or image

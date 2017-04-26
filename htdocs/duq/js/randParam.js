@@ -65,7 +65,7 @@ function randReOp(paramNum, reops){
     var init = "@reops" + paramNum + " = (";
 
     // Expects array[6] of booleans with labeled pointers
-    var ops;
+    var ops = new Array();
     if (reops.less){
         ops.push("\"<\"");
     }

@@ -60,7 +60,7 @@ button
 
 function sendQuestion() 
 {	
-	//addKnowlHelper();
+	addKnowlHelper();
 	var question = document.getElementById("question").value; 
 	if(question == "") 
 	{
@@ -163,7 +163,7 @@ function getSelectedType(){
 function generatePerl()
 {
 	addKnowlHelper();
-	var question = document.getElementById("knowlOutput").innerHTML + document.getElementById("matrixOutput").innerHTML;
+	var question = document.getElementById("matrixOutput").innerHTML;
 	var answer = document.getElementById("answer").value;
 	var solution = document.getElementById("solution").value;
 	solution = checkDollarSigns("solution");
@@ -409,9 +409,11 @@ function generatePerl()
 </fieldset>
 
 <fieldset>
-<legend> Matrix Creator </legend>
+    <legend> Matrix Creator: </legend>
 <textarea id ="theMatrix" class="DuqWorkSave" rows = "5" cols = "30"></textarea>
-<button onclick = "addMatrixHelper()">add a Matrix</button>
+<br>
+<button onclick = "addMatrixHelper()">Add a Matrix</button>
+<p>write matrix in the format of 1 &amp; 0, 0 &amp; 0 </p>
 </fieldset>
 
 </div>

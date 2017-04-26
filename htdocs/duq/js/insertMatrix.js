@@ -1,14 +1,14 @@
 function addMatrixHelper(){
     var x = document.getElementById("theMatrix").value;
-    //var y = document.getElementById("matrixOutput").value;
+    var y = document.getElementById("question").value;
     //question for now
     // not to conflict with known
-    addMatrix(x);
+    addMatrix(x, y);
 }
 
-function addMatrix(theMatrix){
+function addMatrix(theMatrix, theQue){
     var matrixString =theMatrix;
-    //var output=theOutput;
+    var question=theQue;
                                     
     var m1 = "\\[";
     var m2 ="\\begin{bmatrix}";
@@ -24,7 +24,7 @@ function addMatrix(theMatrix){
     var matrix=partsM[0];
     
     if(matrixString == "") {
-    //document.getElementById("matrixOutput").innerHTML = output;
+    document.getElementById("matrixOutput").innerHTML = question;
     }
     
     else{
@@ -36,7 +36,7 @@ function addMatrix(theMatrix){
         var finalMatrixCode = m1+ m2+ matrix + m3+ m4;
         //output=output + finalMatrixCode;
         // add in the end of question with known
-        document.getElementById("matrixOutput").innerHTML = finalMatrixCode;
+        document.getElementById("matrixOutput").innerHTML = question+"<br>"+finalMatrixCode;
         //replace
  }
 }

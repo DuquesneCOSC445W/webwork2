@@ -183,6 +183,18 @@ function generateFillInBlanks()
 		}
 
 		if(document.getElementById('reOpValue').checked && document.getElementsByName('randType')[0].checked){
+			section3 = '");\n<br>'+ 
+					'\n<br>'+ 
+					"PG_restricted_eval('if(" + answer + "){$answer=String(\"True\");}');<br><br>" +
+					
+					'Context()->texStrings;\n<br>' + 
+					'BEGIN_TEXT\n<br>';
+					
+			pgString = section1 + answer + section2 + 
+					'Context()->strings->add("True"=>{});<br>' +
+					'Context()->strings->add("False"=>{});<br>' +
+					section2_String + "False" + section3 + question +
+					section4 + solution + section5; 
 		}
 
 	}
